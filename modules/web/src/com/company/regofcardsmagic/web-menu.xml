@@ -8,5 +8,6 @@
         <item screen="regofcardsmagic$People.browse"/>
         <item screen="regofcardsmagic$Tournament.browse"/>
         <item screen="regofcardsmagic$Types.browse"/>
+        <item screen="screen"/>
     </menu>
 </menu-config>

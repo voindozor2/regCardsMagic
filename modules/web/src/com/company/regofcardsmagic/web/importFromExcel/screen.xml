@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.regofcardsmagic.web.importFromExcel.Screen"
+        messagesPack="com.company.regofcardsmagic.web.importFromExcel">
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <grid height="119px"
+              spacing="true">
+            <columns count="1"/>
+            <rows>
+                <row>
+                    <label id="label"/>
+                </row>
+                <row>
+                    <hbox spacing="true">
+                        <upload id="upload"/>
+                        <button id="button"/>
+                    </hbox>
+                </row>
+            </rows>
+        </grid>
+    </layout>
+</window>
