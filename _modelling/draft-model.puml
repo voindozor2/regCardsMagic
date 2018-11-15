@@ -1,0 +1,91 @@
+@startuml registrationOfCardsMagic
+
+class People {
+Человек
+--
+
+'Фамилия
+surname : string
+'Имя
+name : string
+'Отчество
+patronymic : string
+'DCI
+DCI : integer
+}
+
+class Deck {
+Колода
+--
+
+'Название
+title : string
+'Владелец
+owner : People
+}
+
+class Card {
+Карта
+--
+
+'Название
+name : string
+'Инфа о карте
+information : String
+'Колода
+deck : Deck
+'Владелец
+owner:People
+}
+
+class Contribution {
+Взнос
+--
+
+'Человек
+people : People
+'Дата
+date : Date
+'Тип
+type : Types
+'Сумма
+sum : float
+}
+
+class Tournament {
+Турнир
+--
+
+'Название
+name : String
+'Тип
+type : Types
+'Человек
+people : People
+'Дата
+date : Date
+}
+
+class Types {
+Библиотека типов
+--
+'Имя
+name : String
+'Описание
+description : String
+
+}
+
+Deck "*" -- "0..1" People
+
+Card "*" -- "0..1" People
+Card "*" -- "0..1" Deck
+
+Tournament "*" -- "1" People
+Tournament "*" -- "1" Types
+
+Contribution "*" -- "1" People
+Contribution "*" -- "1" Types
+
+Types "*" -- "0..1" Types
+@enduml
