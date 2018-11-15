@@ -79,7 +79,7 @@ description : String
 Deck "*" -- "0..1" People
 
 Card "*" -- "0..1" People
-Card "*" -- "0..1" Deck
+Card "*" -- "1" Deck
 
 Tournament "*" -- "1" People
 Tournament "*" -- "1" Types

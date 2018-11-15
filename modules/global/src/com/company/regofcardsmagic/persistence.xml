@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
-    <persistence-unit name="regOfCardsMagic" transaction-type="RESOURCE_LOCAL">
-
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             version="2.0">
+    <persistence-unit name="regOfCardsMagic"
+                      transaction-type="RESOURCE_LOCAL">
+        <class>com.company.regofcardsmagic.entity.People</class>
+        <class>com.company.regofcardsmagic.entity.Deck</class>
+        <class>com.company.regofcardsmagic.entity.Card</class>
+        <class>com.company.regofcardsmagic.entity.Contribution</class>
+        <class>com.company.regofcardsmagic.entity.Types</class>
+        <class>com.company.regofcardsmagic.entity.Tournament</class>
     </persistence-unit>
 </persistence>
