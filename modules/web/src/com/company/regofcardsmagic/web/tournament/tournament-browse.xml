@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.regofcardsmagic.web.tournament.TournamentBrowse"
+        focusComponent="tournamentsTable"
+        lookupComponent="tournamentsTable"
+        messagesPack="com.company.regofcardsmagic.web.tournament">
+    <dsContext>
+        <groupDatasource id="tournamentsDs"
+                         class="com.company.regofcardsmagic.entity.Tournament"
+                         view="tournament-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Tournament e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tournamentsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tournamentsTable"
+                datasource="tournamentsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="tournamentsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="type"/>
+                <column id="people"/>
+                <column id="date"/>
+            </columns>
+            <rows datasource="tournamentsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="tournamentsTable.create"/>
+                <button id="editBtn"
+                        action="tournamentsTable.edit"/>
+                <button id="removeBtn"
+                        action="tournamentsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.regofcardsmagic.web.deck.DeckBrowse"
+        focusComponent="decksTable"
+        lookupComponent="decksTable"
+        messagesPack="com.company.regofcardsmagic.web.deck">
+    <dsContext>
+        <groupDatasource id="decksDs"
+                         class="com.company.regofcardsmagic.entity.Deck"
+                         view="deck-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Deck e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="decksTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="decksTable"
+                datasource="decksDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="decksTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="title"/>
+                <column id="owner"/>
+            </columns>
+            <rows datasource="decksDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="decksTable.create"/>
+                <button id="editBtn"
+                        action="decksTable.edit"/>
+                <button id="removeBtn"
+                        action="decksTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.regofcardsmagic.web.people.PeopleEdit"
+        datasource="peopleDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.regofcardsmagic.web.people">
+    <dsContext>
+        <datasource id="peopleDs"
+                    class="com.company.regofcardsmagic.entity.People"
+                    view="people-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="peopleDs">
+            <column width="250px">
+                <field property="surname"
+                       rows="5"/>
+                <field property="name"
+                       rows="5"/>
+                <field property="patronymic"
+                       rows="5"/>
+                <field property="dci"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

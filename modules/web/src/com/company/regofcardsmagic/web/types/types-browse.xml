@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.regofcardsmagic.web.types.TypesBrowse"
+        focusComponent="typesesTable"
+        lookupComponent="typesesTable"
+        messagesPack="com.company.regofcardsmagic.web.types">
+    <dsContext>
+        <groupDatasource id="typesesDs"
+                         class="com.company.regofcardsmagic.entity.Types"
+                         view="types-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Types e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="typesesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="typesesTable"
+                datasource="typesesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="typesesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="type"/>
+                <column id="description"/>
+            </columns>
+            <rows datasource="typesesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="typesesTable.create"/>
+                <button id="editBtn"
+                        action="typesesTable.edit"/>
+                <button id="removeBtn"
+                        action="typesesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

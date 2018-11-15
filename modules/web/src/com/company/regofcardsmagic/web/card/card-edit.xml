@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.regofcardsmagic.web.card.CardEdit"
+        datasource="cardDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.regofcardsmagic.web.card">
+    <dsContext>
+        <datasource id="cardDs"
+                    class="com.company.regofcardsmagic.entity.Card"
+                    view="card-view"/>
+        <collectionDatasource id="ownersDs"
+                              class="com.company.regofcardsmagic.entity.People"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from regofcardsmagic$People e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="decksDs"
+                              class="com.company.regofcardsmagic.entity.Deck"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Deck e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="cardDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="information"
+                       rows="5"/>
+                <field optionsDatasource="ownersDs"
+                       property="owner"/>
+                <field optionsDatasource="decksDs"
+                       property="deck"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

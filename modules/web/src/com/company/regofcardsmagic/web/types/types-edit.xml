@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.regofcardsmagic.web.types.TypesEdit"
+        datasource="typesDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.regofcardsmagic.web.types">
+    <dsContext>
+        <datasource id="typesDs"
+                    class="com.company.regofcardsmagic.entity.Types"
+                    view="types-view"/>
+        <collectionDatasource id="typesDs"
+                              class="com.company.regofcardsmagic.entity.Types"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Types e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="typesDs">
+            <column width="250px">
+                <field property="name"
+                       rows="5"/>
+                <field optionsDatasource="typesDs"
+                       property="type"/>
+                <field property="description"
+                       rows="5"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>
