@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
-
+    <view class="com.company.regofcardsmagic.entity.Card"
+          extends="_local"
+          name="card-view">
+        <property name="owner"
+                  view="_minimal"/>
+        <property name="deck"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.regofcardsmagic.entity.Contribution"
+          extends="_local"
+          name="contribution-view">
+        <property name="people"
+                  view="_minimal">
+            <property name="name"/>
+        </property>
+        <property name="type"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.regofcardsmagic.entity.Deck"
+          extends="_local"
+          name="deck-view">
+        <property name="owner"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.regofcardsmagic.entity.People"
+          extends="_local"
+          name="people-view"/>
+    <view class="com.company.regofcardsmagic.entity.Tournament"
+          extends="_local"
+          name="tournament-view">
+        <property name="type"
+                  view="_minimal"/>
+        <property name="people"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.regofcardsmagic.entity.Types"
+          extends="_local"
+          name="types-view">
+        <property name="type"
+                  view="_minimal"/>
+    </view>
 </views>
