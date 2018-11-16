@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 
 import javax.inject.Inject;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 @Service(RegCardsService.NAME)
 public class RegCardsServiceBean implements RegCardsService {
@@ -18,7 +21,8 @@ public class RegCardsServiceBean implements RegCardsService {
     @Inject
     private ExportWorker exportWorker;
 
-    public void importFromExcel (FileDescriptor fileDescriptor) throws IOException , FileStorageException {
-    importWorker.importAllCardsFromExcel(fileDescriptor);
+    public void importFromExcel (File file , HashMap<String, String> params, int cellMaxNum,
+                                 int rowWhereFindNum, int rowMaxNum) throws FileNotFoundException,IOException {
+    importWorker.importAllCardsFromExcel(file,params,cellMaxNum,rowWhereFindNum,rowMaxNum);
     }
 }
