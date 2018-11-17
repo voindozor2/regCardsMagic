@@ -1,16 +1,16 @@
 
 buildscript {
-    ext.cubaVersion = '6.9.3'
+    ext.cubaVersion = '6.9.7'
     repositories {
-        
+        mavenCentral()
         maven {
-            url 'http://1.0.0.137:8010/nexus/content/groups/cuba-group/'
+            url 'https://repo.cuba-platform.com/content/groups/work'
             credentials {
-                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : 'admin')
-                password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'admin123')
+                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : 'cuba')
+                password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
             }
         }
-        
+
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -85,7 +85,9 @@ configure(coreModule) {
         provided(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
-
+        compile(group: 'org.apache.poi', name: 'poi', version: '4.0.0   ')
+        compile(group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.0.0')
+        compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
     }
 
     task cleanConf(description: 'Cleans up conf directory') {

@@ -22,7 +22,7 @@ public class RegCardsServiceBean implements RegCardsService {
     private ExportWorker exportWorker;
 
     public void importFromExcel (File file , HashMap<String, String> params, int cellMaxNum,
-                                 int rowWhereFindNum, int rowMaxNum) throws FileNotFoundException,IOException {
-    importWorker.importAllCardsFromExcel(file,params,cellMaxNum,rowWhereFindNum,rowMaxNum);
+                                 int rowWhereFindNum, int rowMaxNum, int numSheetInWorkBook) throws FileNotFoundException,IOException {
+    importWorker.importAllCardsFromExcel(file,params,cellMaxNum,rowWhereFindNum,rowMaxNum,numSheetInWorkBook);
     }
 }

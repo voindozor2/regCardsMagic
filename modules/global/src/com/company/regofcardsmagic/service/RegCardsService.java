@@ -14,5 +14,5 @@ public interface RegCardsService {
     String NAME = "regofcardsmagic_RegCardsService";
 
     void importFromExcel (File file , HashMap<String, String> params, int cellMaxNum,
-                          int rowWhereFindNum, int rowMaxNum) throws FileNotFoundException,IOException;
+                          int rowWhereFindNum, int rowMaxNum,int numSheetInWorkBook) throws FileNotFoundException,IOException;
 }

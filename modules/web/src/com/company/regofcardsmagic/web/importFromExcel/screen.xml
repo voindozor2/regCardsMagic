@@ -6,20 +6,22 @@
     <dialogMode height="600"
                 width="800"/>
     <layout>
-        <grid height="119px"
-              spacing="true">
-            <columns count="1"/>
-            <rows>
-                <row>
-                    <label id="label"/>
-                </row>
-                <row>
-                    <hbox spacing="true">
-                        <upload id="upload"/>
-                        <button id="button"/>
-                    </hbox>
-                </row>
-            </rows>
-        </grid>
+        <hbox spacing="true">
+            <vbox spacing="true">
+                <textField id="rowWhereFind"
+                           caption="Cтрока на которой находятся заголовки"/>
+                <textField id="rowMax"
+                           caption="Максимальное количество строк"/>
+                <textField id="cellMax"
+                           caption="Максимальное количество колонок"/>
+                <textField id="SheetInWorkBook"
+                           caption="Номер листа в книге"/>
+                <upload id="upload"/>
+                <button id="button"
+                        caption="Start"/>
+            </vbox>
+            <vbox id="generatorParams"
+                  spacing="true"/>
+        </hbox>
     </layout>
 </window>

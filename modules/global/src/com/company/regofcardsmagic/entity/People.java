@@ -1,5 +1,4 @@
 package com.company.regofcardsmagic.entity;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
