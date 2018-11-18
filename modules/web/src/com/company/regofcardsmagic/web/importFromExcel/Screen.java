@@ -83,13 +83,14 @@ public class Screen extends AbstractWindow {
                             cellMax.getValue() == null) {
                     showNotification("Введите значения в форму!");
                     }
-                    else if (!rowWhereFind.getDatatype().equals(PixelFormat.DataType.INT) ||
+                   /* else if (!rowWhereFind.getDatatype().equals(PixelFormat.DataType.INT) ||
                             !SheetInWorkBook.getDatatype().equals(PixelFormat.DataType.INT) ||
                             !rowMax.getDatatype().equals(PixelFormat.DataType.INT) ||
                             !cellMax.getDatatype().equals(PixelFormat.DataType.INT)) {
                         showNotification("Введите числа в поля!");
 
-                    }else {
+                    }*/
+                   else {
                         regCardsService.importFromExcel(file,param ,cellMax.getValue(),rowWhereFind.getValue()
                                 ,rowMax.getValue(),SheetInWorkBook.getValue());
                     }
