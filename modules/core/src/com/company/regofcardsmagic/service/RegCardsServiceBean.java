@@ -2,6 +2,7 @@ package com.company.regofcardsmagic.service;
 
 import com.company.regofcardsmagic.core.ExportWorker;
 import com.company.regofcardsmagic.core.ImportWorker;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FileStorageException;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,11 @@ public class RegCardsServiceBean implements RegCardsService {
     @Inject
     private ExportWorker exportWorker;
 
+    @Inject
+    private DataManager dataManager;
+
     public void importFromExcel (File file , HashMap<String, String> params, int cellMaxNum,
                                  int rowWhereFindNum, int rowMaxNum, int numSheetInWorkBook) throws FileNotFoundException,IOException {
-    importWorker.importAllCardsFromExcel(file,params,cellMaxNum,rowWhereFindNum,rowMaxNum,numSheetInWorkBook);
+    importWorker.importAllCardsFromExcel(file,params,cellMaxNum,rowWhereFindNum,rowMaxNum,numSheetInWorkBook,dataManager);
     }
 }
