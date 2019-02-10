@@ -8,10 +8,9 @@ import com.haulmont.cuba.core.global.FileLoader;
 import com.haulmont.cuba.core.global.FileStorageException;
 import groovy.util.MapEntry;
 import org.apache.poi.hssf.util.CellReference;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
+import org.codehaus.groovy.runtime.dgmimpl.arrays.IntegerArrayGetAtMetaMethod;
 import org.springframework.stereotype.Component;
 import org.apache.poi.*;
 import java.io.*;
@@ -23,14 +22,42 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import javax.inject.Inject;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.extractor.XSSFExcelExtractor;
+
+import static org.apache.poi.ss.usermodel.CellType.*;
+
 @Component("regOfCardsMagic_ImportWorker")
 public class ImportWorker {
+    FormulaEvaluator evaluator ;
     DataFormatter dataFormatter = new DataFormatter();
     //Отлажено
     public ArrayList<String> returnDataFormColumn (int col , int linesMax,Sheet sheet , int rowWhereFindNum) {
         ArrayList<String> column = new ArrayList<>();
         for (int i = rowWhereFindNum+1; i < linesMax; i++) {
-            column.add(dataFormatter.formatCellValue(sheet.getRow(i).getCell(col)));
+            Cell cell = sheet.getRow(i).getCell(col);
+            CellValue cellValue = evaluator.evaluate(cell);
+
+            switch (cellValue.getCellType()) {
+                case BOOLEAN:
+                    column.add(String.valueOf(cellValue.getBooleanValue()));
+                    break;
+                case NUMERIC:
+                    Integer value = (int) cellValue.getNumberValue();
+                    column.add(String.valueOf(value));
+                    break;
+                case STRING:
+                    column.add(String.valueOf(cellValue.getStringValue()));
+                    break;
+                case BLANK:
+                    break;
+                case ERROR:
+                    break;
+
+                // CELL_TYPE_FORMULA will never happen
+                case FORMULA:
+                    break;
+            }
+
+
         }
         return column;
     }
@@ -94,6 +121,7 @@ public class ImportWorker {
         InputStream in = new FileInputStream(file);
         XSSFWorkbook wb = new XSSFWorkbook(in);
         Sheet sheet = wb.getSheetAt(numSheetInWorkBook);
+        evaluator = wb.getCreationHelper().createFormulaEvaluator();
 
        HashMap<String,ArrayList<String>> column = returnAllColumnsWithData(sheet,params,cellMaxNum,rowWhereFindNum,rowMaxNum);
         ArrayList<HashMap<String,String>> parametersOfCards = returnParametersOfCards(column,rowMaxNum,rowWhereFindNum);

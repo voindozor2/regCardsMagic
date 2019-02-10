@@ -91,7 +91,7 @@ public class Screen extends AbstractWindow {
         idTextFields.add("amount");
         generatorParams.add(textField);
         upload.addFileUploadSucceedListener(event -> {
-         file = fileUploadingAPI.getFile(upload.getFileId());
+            file = fileUploadingAPI.getFile(upload.getFileId());
         });
 
 

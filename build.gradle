@@ -85,9 +85,10 @@ configure(coreModule) {
         provided(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
-        compile(group: 'org.apache.poi', name: 'poi', version: '4.0.0   ')
-        compile(group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.0.0')
-        compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
+        compile(group: 'org.apache.poi', name: 'poi', version: '4.0.1')
+        compile(group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.0.1')
+        compile(group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.1')
+        compile(group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.0.1')
     }
 
     task cleanConf(description: 'Cleans up conf directory') {
@@ -195,4 +196,21 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.3.1'
+}
+
+task jelasticBuildWar(type: CubaWarBuilding) {
+    appHome = '..'
+    webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
+    appProperties = ['cuba.automaticDatabaseUpdate' : true,
+'cuba.logDir' : '${catalina.base}/logs']
+    includeJdbcDriver = true
+    includeContextXml = true
+    hsqlInProcess = true
+}
+
+task jelasticDeployWar(type: CubaJelasticDeploy, dependsOn: jelasticBuildWar) {
+    email = rootProject.hasProperty('jelasticEmail') ? rootProject['jelasticEmail'] : ''
+    password = rootProject.hasProperty('jelasticPassword') ? rootProject['jelasticPassword'] : ''
+    hostUrl = 'app.jelastic.regruhosting.ru'
+    environment = 'my-env-1'
 }

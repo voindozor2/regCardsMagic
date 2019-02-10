@@ -12,6 +12,8 @@
             <map>
                 <entry key="regofcardsmagic_RegCardsService"
                        value="com.company.regofcardsmagic.service.RegCardsService"/>
+                <entry key="regofcardsmagic_ApiScryFallService"
+                       value="com.company.regofcardsmagic.service.ApiScryFallService"/>
             </map>
         </property>
     </bean>
