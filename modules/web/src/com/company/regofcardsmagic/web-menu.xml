@@ -8,6 +8,7 @@
         <item screen="regofcardsmagic$People.browse"/>
         <item screen="regofcardsmagic$Tournament.browse"/>
         <item screen="regofcardsmagic$Types.browse"/>
-        <item screen="screen"/>
+        <item screen="importFromExcelToDataBase"/>
+        <item screen="importDeckList"/>
     </menu>
 </menu-config>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://caption"
-        class="com.company.regofcardsmagic.web.importFromExcel.Screen"
+        class="com.company.regofcardsmagic.web.importFromExcel.Importfromexceltodatabase"
         messagesPack="com.company.regofcardsmagic.web.importFromExcel">
     <dialogMode height="600"
                 width="800"/>

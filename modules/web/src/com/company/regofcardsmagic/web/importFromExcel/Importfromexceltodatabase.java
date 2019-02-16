@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Screen extends AbstractWindow {
+public class Importfromexceltodatabase extends AbstractWindow {
     @Inject
     private Label label;
 

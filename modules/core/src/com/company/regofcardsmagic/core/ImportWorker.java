@@ -29,40 +29,10 @@ import static org.apache.poi.ss.usermodel.CellType.*;
 public class ImportWorker {
     FormulaEvaluator evaluator ;
     DataFormatter dataFormatter = new DataFormatter();
+    Sheet sheet;
+
     //Отлажено
-    public ArrayList<String> returnDataFormColumn (int col , int linesMax,Sheet sheet , int rowWhereFindNum) {
-        ArrayList<String> column = new ArrayList<>();
-        for (int i = rowWhereFindNum+1; i < linesMax; i++) {
-            Cell cell = sheet.getRow(i).getCell(col);
-            CellValue cellValue = evaluator.evaluate(cell);
-
-            switch (cellValue.getCellType()) {
-                case BOOLEAN:
-                    column.add(String.valueOf(cellValue.getBooleanValue()));
-                    break;
-                case NUMERIC:
-                    Integer value = (int) cellValue.getNumberValue();
-                    column.add(String.valueOf(value));
-                    break;
-                case STRING:
-                    column.add(String.valueOf(cellValue.getStringValue()));
-                    break;
-                case BLANK:
-                    break;
-                case ERROR:
-                    break;
-
-                // CELL_TYPE_FORMULA will never happen
-                case FORMULA:
-                    break;
-            }
-
-
-        }
-        return column;
-    }
-    //Отлажено
-    public Integer searchForColumn (Sheet sheet , String nameOfColumn , int lineForSearch, int colMax) {
+    public Integer searchForColumn (String nameOfColumn , int lineForSearch, int colMax) {
         for (int i = 0; i < colMax; i++) {
             String dataInColumn = dataFormatter.formatCellValue(sheet.getRow(lineForSearch).getCell(i));
             if(dataInColumn.equals(nameOfColumn)) {
@@ -71,31 +41,41 @@ public class ImportWorker {
         }
         throw new RuntimeException("Такой колонки не существует = " + nameOfColumn);
     }
-    //Отлажено
-    public HashMap<String , ArrayList<String>> returnAllColumnsWithData (Sheet sheet , HashMap<String,String> paramsJuxtaposition,int colMax,int rowWhereFindNum,int linesMax) {
-        HashMap<String , ArrayList<String>> allColumns = new HashMap<>();
-        for (Map.Entry param : paramsJuxtaposition.entrySet()) {
-            int columnNumberToFind = searchForColumn(sheet, String.valueOf(param.getValue()),rowWhereFindNum,colMax);
-            allColumns.put(String.valueOf(param.getKey()),returnDataFormColumn(columnNumberToFind,linesMax,sheet,rowWhereFindNum));
+
+    public HashMap<String,Integer> searchAllColumns (HashMap<String,String> paramsJuxtaposition , int lineForSearch, int colMax) {
+        HashMap<String,Integer> result = new HashMap<>();
+        for (Map.Entry paramJuxtAposition : paramsJuxtaposition.entrySet()) {
+            result.put(paramJuxtAposition.getKey().toString(),searchForColumn(paramJuxtAposition.getValue().toString(),lineForSearch,colMax));
         }
-        return allColumns;
+        return result;
     }
-    //Отлажено
-    public ArrayList<HashMap<String,String>> returnParametersOfCards (HashMap<String , ArrayList<String>> columnsWithData,int linesMax,int rowWhereFindNum) {
-        ArrayList<HashMap<String,String>> cards = new ArrayList<>();
-        for (int i = 0; i < linesMax - (rowWhereFindNum+1); i++) {
-            HashMap<String , String> card = new HashMap<>();
-            for (Map.Entry column : columnsWithData.entrySet()) {
-                ArrayList<String> data = (ArrayList)column.getValue();
-                card.put(String.valueOf(column.getKey()),data.get(i));
-            }
-            cards.add(card);
+
+    public String returnDataFromColumn (int line , int col) {
+        Cell cell = sheet.getRow(line).getCell(col);
+        CellValue cellValue = evaluator.evaluate(cell);
+
+        switch (cellValue.getCellType()) {
+            case BOOLEAN:
+                return String.valueOf(cellValue.getBooleanValue());
+            case NUMERIC:
+                Integer value = (int) cellValue.getNumberValue();
+                return String.valueOf(value);
+            case STRING:
+                return String.valueOf(cellValue.getStringValue());
+            case BLANK:
+                break;
+            case ERROR:
+                break;
+
+            // CELL_TYPE_FORMULA will never happen
+            case FORMULA:
+                break;
         }
-        return cards;
+        return null;
     }
-    //Отлажено
+
     public Card cardFactory (HashMap<String,String> parametersOfCard) {
-       Card card = new Card();
+        Card card = new Card();
         for (Map.Entry parameter : parametersOfCard.entrySet()) {
             if(!parameter.getKey().equals("amount")){
                 card.setValue(String.valueOf(parameter.getKey()),String.valueOf(parameter.getValue()));
@@ -103,15 +83,15 @@ public class ImportWorker {
         }
         return card;
     }
-    //Отлажено
-    public ArrayList<Card> returnCards (ArrayList<HashMap<String,String>> parametersOfCards){
-        ArrayList<Card> cards = new ArrayList<>();
-        for (HashMap<String,String> parameterOfCard : parametersOfCards) {
-            for (int i = 0; i < Integer.parseInt(parameterOfCard.get("amount")); i++) {
-                cards.add(cardFactory(parameterOfCard));
+
+    public HashMap<String,String> returnParametersOfCard (HashMap<String,Integer> allcolumns,int line) {
+        HashMap<String,String> paramsOfCard = new HashMap<>();
+        for (Map.Entry column : allcolumns.entrySet()) {
+            if(!column.getKey().equals("amount")) {
+                paramsOfCard.put(column.getKey().toString(),returnDataFromColumn(line,(int)column.getValue()));
             }
         }
-        return cards;
+        return paramsOfCard;
     }
 
     public void importAllCardsFromExcel(File file, HashMap<String, String> params, int cellMaxNum,
@@ -120,15 +100,20 @@ public class ImportWorker {
 
         InputStream in = new FileInputStream(file);
         XSSFWorkbook wb = new XSSFWorkbook(in);
-        Sheet sheet = wb.getSheetAt(numSheetInWorkBook);
+        sheet = wb.getSheetAt(numSheetInWorkBook);
         evaluator = wb.getCreationHelper().createFormulaEvaluator();
+        HashMap<String,Integer> allcolumns = searchAllColumns(params,rowWhereFindNum,cellMaxNum);
 
-       HashMap<String,ArrayList<String>> column = returnAllColumnsWithData(sheet,params,cellMaxNum,rowWhereFindNum,rowMaxNum);
-        ArrayList<HashMap<String,String>> parametersOfCards = returnParametersOfCards(column,rowMaxNum,rowWhereFindNum);
-        ArrayList<Card> cards = returnCards(parametersOfCards);
+        for (int i = rowWhereFindNum + 1; i < rowMaxNum; i++) {
+            HashMap<String,String> paramsOfCard = returnParametersOfCard(allcolumns,i);
+            if(allcolumns.get("amount")!=null) {
+                int amountOfCards = Integer.parseInt(returnDataFromColumn(i,allcolumns.get("amount")));
+                for (int j = 0; j < amountOfCards; j++) {
+                    dataManager.commit(cardFactory(paramsOfCard));
+                }
+            }
 
-        for (Card card : cards) {
-            dataManager.commit(card);
         }
-    }
+
+        }
 }

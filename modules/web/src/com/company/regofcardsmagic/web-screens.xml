@@ -24,6 +24,8 @@
             template="com/company/regofcardsmagic/web/types/types-browse.xml"/>
     <screen id="regofcardsmagic$Types.edit"
             template="com/company/regofcardsmagic/web/types/types-edit.xml"/>
-    <screen id="screen"
-            template="com/company/regofcardsmagic/web/importFromExcel/screen.xml"/>
+    <screen id="importFromExcelToDataBase"
+            template="com/company/regofcardsmagic/web/importFromExcel/importFromExcelToDataBase.xml"/>
+    <screen id="importDeckList"
+            template="com/company/regofcardsmagic/web/importFromExcel/importDeckList.xml"/>
 </screen-config>
