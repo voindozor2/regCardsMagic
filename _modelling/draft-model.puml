@@ -3,7 +3,6 @@
 class People {
 Человек
 --
-
 'Фамилия
 surname : string
 'Имя
@@ -12,22 +11,28 @@ name : string
 patronymic : string
 'DCI
 DCI : integer
+'Должность в команде
+positionInTeam : PositionInTeam
+'Команда
+team : Team
 }
 
-class Deck {
+class Deck{
 Колода
 --
-
 'Название
 title : string
 'Владелец
 owner : People
+'Основная колода
+maindeck : Card
+'Дополнительная колода
+sideboard : Card
 }
 
 class Card {
 Карта
 --
-
 'Название
 name : string
 'Инфа о карте
@@ -38,24 +43,9 @@ deck : Deck
 owner:People
 }
 
-class Contribution {
-Взнос
---
-
-'Человек
-people : People
-'Дата
-date : Date
-'Тип
-type : Types
-'Сумма
-sum : float
-}
-
 class Tournament {
 Турнир
 --
-
 'Название
 name : String
 'Тип
@@ -73,19 +63,173 @@ class Types {
 name : String
 'Описание
 description : String
+}
+
+class CollectionOfCards extends Storage{
+    Пул карт
+    --
+    card : Card
+    box : String
+    separator : String
+}
+
+class RentCards extends Storage{
+    Аренда карт
+    --
+    card : Card
+    toWho : People
+    from : typeOf
 
 }
 
-Deck "*" -- "0..1" People
+class CardsForTrade extends Storage {
+    Карты в трейд
+    --
+    card : Card
+}
 
-Card "*" -- "0..1" People
-Card "*" -- "1" Deck
+class Storage {
+    card : Card
+}
 
-Tournament "*" -- "1" People
-Tournament "*" -- "1" Types
+class Operation {
+Операция
+--
+}
 
-Contribution "*" -- "1" People
-Contribution "*" -- "1" Types
+class Barter extends Operation {
+Бартер
+--
+}
 
-Types "*" -- "0..1" Types
+class MoneyOperation extends Operation{
+    Денежные операции
+    --
+    sum : double
+}
+
+class Contribution extends MoneyOperation {
+Взнос
+--
+'Человек
+people : People
+'Дата
+date : Date
+'Тип
+type : Types
+'Сумма
+sum : double
+}
+
+class Trade extends MoneyOperation{
+    Сделка
+    --
+    'Продавец
+    seller : People
+    'Покупатель
+    buyer  : People
+    'Список карт
+    card   : Card 
+    'Сумма
+    sum    : double
+}
+
+class CardExchange extends Barter{
+    Обмен карт
+    --
+    '1 Человек который хочет обменять
+    buyer : People
+    '2 Человек у которого хотят обменять
+    seller : People 
+    'Карты 1 го человека
+    cardsForBuy : Card
+    'Карты 2 го человека
+    cardsForSell : Card
+}
+
+class Rent extends Trade {
+    Аренда
+    --
+    'Человек берущий в аренду
+    buyer : People
+    'Человек дающий в аренду
+    seller : People   
+    'Дата сдачи в аренду
+    rentalDate : Date
+    'Дата приема из аренды
+    admissionDate : Date
+    'Оплата за аренду в рублях
+    sum : double
+    'Карты которые берут в аренду
+    cards : Card
+}
+
+class PositionInTeam {
+    'Наименование
+    name : String
+}
+
+class Compensation extends MoneyOperation {
+    Компенсация
+    --
+    'Человек которому полагается компенсация
+    people : People
+    'В связи с чем ему предполагается компенсация(должность занимаемая в команде)
+    positionInTeam : PositionInTeam
+    'Сумма компенсации
+    sum : double
+}
+
+Class Team {
+    name : String
+    teamMates : People
+}
+
+Class moveOfCards {
+    Лог движения карт
+    --
+    'Откуда пришла карта
+     from : Storage
+    'Куда пришла карта
+     to : Storage
+    'Кто совершил эту операцию
+     who : People
+    'Дата
+    date : Date
+    'Карта
+    card : Card
+    'Операция
+    operation : Operation
+}
+
+Deck "*" --- "0..1" People
+
+Card "*" --- "0..1" People
+Card "*" --- "1" Deck
+Card "*" --- "1" CardExchange
+Card "*" --- "1" Trade
+Card "*" --- "1" Storage
+Card "1" --- "1" moveOfCards
+
+Tournament "*" --- "1" People
+Tournament "*" --- "1" Types
+
+Contribution "*" --- "1" People
+Contribution "*" --- "1" Types
+
+Types "*" --- "0..1" Types
+
+People "1" --- "1" CardExchange
+People "1" ---"1" Trade
+People "1" --- "1" Compensation
+People "1" --- "1" moveOfCards
+
+
+PositionInTeam "1" --- "1" People
+PositionInTeam "1" --- "1" Compensation
+
+moveOfCards "1" --- "1" Storage
+moveOfCards "1" --- "1" Operation
+
+Team "*" --- "*" People
 @enduml
