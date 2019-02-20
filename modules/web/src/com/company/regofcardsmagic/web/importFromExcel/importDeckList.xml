@@ -3,6 +3,15 @@
         caption="msg://caption"
         class="com.company.regofcardsmagic.web.importFromExcel.Importdecklist"
         messagesPack="com.company.regofcardsmagic.web.importFromExcel">
+    <dsContext>
+        <collectionDatasource id="decksDs"
+                              class="com.company.regofcardsmagic.entity.Deck"
+                              view="deck-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Deck e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
     <dialogMode height="600"
                 width="800"/>
     <layout>
@@ -29,6 +38,8 @@
                                     caption="check"/>
                             <button id="start"
                                     caption="start"/>
+                            <lookupField id="deck"
+                                         datasource="decksDs"/>
                         </hbox>
                         <vbox id="labels"
                               height="100%"

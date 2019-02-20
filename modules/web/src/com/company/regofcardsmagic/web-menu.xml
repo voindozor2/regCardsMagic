@@ -4,11 +4,12 @@
           insertBefore="administration">
         <item screen="regofcardsmagic$Card.browse"/>
         <item screen="regofcardsmagic$Contribution.browse"/>
-        <item screen="regofcardsmagic$Deck.browse"/>
         <item screen="regofcardsmagic$People.browse"/>
         <item screen="regofcardsmagic$Tournament.browse"/>
         <item screen="regofcardsmagic$Types.browse"/>
         <item screen="importFromExcelToDataBase"/>
         <item screen="importDeckList"/>
+        <item screen="regofcardsmagic$Trade.browse"/>
+        <item screen="regofcardsmagic$Deck.browse"/>
     </menu>
 </menu-config>

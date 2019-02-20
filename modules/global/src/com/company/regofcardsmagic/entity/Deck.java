@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import java.util.List;
+import javax.persistence.OneToMany;
 
 @NamePattern("%s|title")
 @Table(name = "REGOFCARDSMAGIC_DECK")
@@ -28,6 +30,32 @@ public class Deck extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID")
     protected People owner;
+
+
+
+    @OneToMany(mappedBy = "deck")
+    protected List<Card> maindeck;
+
+    @OneToMany(mappedBy = "deck")
+    protected List<Card> sideboard;
+
+    public void setSideboard(List<Card> sideboard) {
+        this.sideboard = sideboard;
+    }
+
+    public List<Card> getSideboard() {
+        return sideboard;
+    }
+
+
+    public void setMaindeck(List<Card> maindeck) {
+        this.maindeck = maindeck;
+    }
+
+    public List<Card> getMaindeck() {
+        return maindeck;
+    }
+
 
     public void setTitle(String title) {
         this.title = title;

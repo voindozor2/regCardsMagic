@@ -23,10 +23,19 @@
           name="deck-view">
         <property name="owner"
                   view="_minimal"/>
+        <property name="maindeck"
+                  view="_minimal"/>
+        <property name="sideboard"
+                  view="_minimal"/>
     </view>
     <view class="com.company.regofcardsmagic.entity.People"
           extends="_local"
-          name="people-view"/>
+          name="people-view">
+        <property name="positionInTeam"
+                  view="_minimal"/>
+        <property name="team"
+                  view="_local"/>
+    </view>
     <view class="com.company.regofcardsmagic.entity.Tournament"
           extends="_local"
           name="tournament-view">
@@ -39,6 +48,24 @@
           extends="_local"
           name="types-view">
         <property name="type"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.regofcardsmagic.entity.Trade"
+          extends="_local"
+          name="trade-view">
+        <property name="seller"
+                  view="_minimal">
+            <property name="surname"/>
+            <property name="name"/>
+            <property name="patronymic"/>
+        </property>
+        <property name="buyer"
+                  view="_minimal">
+            <property name="surname"/>
+            <property name="name"/>
+            <property name="patronymic"/>
+        </property>
+        <property name="card"
                   view="_minimal"/>
     </view>
 </views>

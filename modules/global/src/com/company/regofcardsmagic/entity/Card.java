@@ -37,6 +37,7 @@ public class Card extends StandardEntity {
     @JoinColumn(name = "DECK_ID")
     protected Deck deck;
 
+
     public void setDeck(Deck deck) {
         this.deck = deck;
     }

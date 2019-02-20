@@ -35,6 +35,13 @@
                 <column id="name"/>
                 <column id="patronymic"/>
                 <column id="dci"/>
+                <column id="positionInTeam"/>
+                <column id="email"/>
+                <column id="nickname"/>
+                <column id="numberOfCard"/>
+                <column id="birthDate"/>
+                <column id="entryDate"/>
+                <column id="telephoneNumber"/>
             </columns>
             <rows datasource="peoplesDs"/>
             <rowsCount/>

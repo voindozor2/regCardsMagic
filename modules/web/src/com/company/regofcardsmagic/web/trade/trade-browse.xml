@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.regofcardsmagic.web.trade.TradeBrowse"
+        focusComponent="tradesTable"
+        lookupComponent="tradesTable"
+        messagesPack="com.company.regofcardsmagic.web.trade">
+    <dsContext>
+        <groupDatasource id="tradesDs"
+                         class="com.company.regofcardsmagic.entity.Trade"
+                         view="trade-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Trade e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tradesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tradesTable"
+                datasource="tradesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="tradesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="sum"/>
+                <column id="card"/>
+                <column id="seller"/>
+                <column id="buyer"/>
+            </columns>
+            <rows datasource="tradesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="tradesTable.create"/>
+                <button id="editBtn"
+                        action="tradesTable.edit"/>
+                <button id="removeBtn"
+                        action="tradesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

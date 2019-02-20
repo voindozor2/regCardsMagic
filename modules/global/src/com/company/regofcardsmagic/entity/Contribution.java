@@ -16,7 +16,7 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "REGOFCARDSMAGIC_CONTRIBUTION")
 @Entity(name = "regofcardsmagic$Contribution")
-public class Contribution extends StandardEntity {
+public class Contribution extends MoneyOperation {
     private static final long serialVersionUID = 3673898491323380065L;
 
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup"})
@@ -30,9 +30,6 @@ public class Contribution extends StandardEntity {
     @JoinColumn(name = "TYPE_ID")
     protected Types type;
 
-    @NotNull
-    @Column(name = "SUM_", nullable = false)
-    protected Double sum;
 
     @Temporal(TemporalType.DATE)
     @NotNull
@@ -47,13 +44,7 @@ public class Contribution extends StandardEntity {
         return type;
     }
 
-    public void setSum(Double sum) {
-        this.sum = sum;
-    }
 
-    public Double getSum() {
-        return sum;
-    }
 
 
     public void setPeople(People people) {

@@ -15,6 +15,18 @@ DCI : integer
 positionInTeam : PositionInTeam
 'Команда
 team : Team
+'Электронная почта
+email : string 
+'Никнейм
+nickname : string
+'Номер карты
+numberOfCard : string
+'День рождения
+birthDate : date
+'Дата вступления
+entryDate : date
+'Номер телефона
+telephoneNumber : string
 }
 
 class Deck{
@@ -68,7 +80,7 @@ description : String
 class CollectionOfCards extends Storage{
     Пул карт
     --
-    card : Card
+    cards : List<Card>
     box : String
     separator : String
 }
@@ -76,20 +88,19 @@ class CollectionOfCards extends Storage{
 class RentCards extends Storage{
     Аренда карт
     --
-    card : Card
+    cards : List<Card>
     toWho : People
-    from : typeOf
 
 }
 
 class CardsForTrade extends Storage {
     Карты в трейд
     --
-    card : Card
+    cards : List<Card>
 }
 
 class Storage {
-    card : Card
+    cards : List<Card>
 }
 
 class Operation {
@@ -129,7 +140,7 @@ class Trade extends MoneyOperation{
     'Покупатель
     buyer  : People
     'Список карт
-    card   : Card 
+    cards : List<Card> 
     'Сумма
     sum    : double
 }
@@ -142,9 +153,9 @@ class CardExchange extends Barter{
     '2 Человек у которого хотят обменять
     seller : People 
     'Карты 1 го человека
-    cardsForBuy : Card
+    cardsForBuy : List<Card>
     'Карты 2 го человека
-    cardsForSell : Card
+    cardsForSell : List<Card>
 }
 
 class Rent extends Trade {
@@ -161,7 +172,7 @@ class Rent extends Trade {
     'Оплата за аренду в рублях
     sum : double
     'Карты которые берут в аренду
-    cards : Card
+    cards : List<Card>
 }
 
 class PositionInTeam {
@@ -223,7 +234,7 @@ People "1" --- "1" CardExchange
 People "1" ---"1" Trade
 People "1" --- "1" Compensation
 People "1" --- "1" moveOfCards
-
+People "1" --- "1" RentCards
 
 PositionInTeam "1" --- "1" People
 PositionInTeam "1" --- "1" Compensation

@@ -8,10 +8,6 @@
             template="com/company/regofcardsmagic/web/contribution/contribution-browse.xml"/>
     <screen id="regofcardsmagic$Contribution.edit"
             template="com/company/regofcardsmagic/web/contribution/contribution-edit.xml"/>
-    <screen id="regofcardsmagic$Deck.browse"
-            template="com/company/regofcardsmagic/web/deck/deck-browse.xml"/>
-    <screen id="regofcardsmagic$Deck.edit"
-            template="com/company/regofcardsmagic/web/deck/deck-edit.xml"/>
     <screen id="regofcardsmagic$People.browse"
             template="com/company/regofcardsmagic/web/people/people-browse.xml"/>
     <screen id="regofcardsmagic$People.edit"
@@ -28,4 +24,12 @@
             template="com/company/regofcardsmagic/web/importFromExcel/importFromExcelToDataBase.xml"/>
     <screen id="importDeckList"
             template="com/company/regofcardsmagic/web/importFromExcel/importDeckList.xml"/>
+    <screen id="regofcardsmagic$Trade.browse"
+            template="com/company/regofcardsmagic/web/trade/trade-browse.xml"/>
+    <screen id="regofcardsmagic$Trade.edit"
+            template="com/company/regofcardsmagic/web/trade/trade-edit.xml"/>
+    <screen id="regofcardsmagic$Deck.browse"
+            template="com/company/regofcardsmagic/web/deck/deck-browse.xml"/>
+    <screen id="regofcardsmagic$Deck.edit"
+            template="com/company/regofcardsmagic/web/deck/deck-edit.xml"/>
 </screen-config>

@@ -5,14 +5,9 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
-import io.swagger.models.auth.In;
 
 import javax.inject.Inject;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Importdecklist extends AbstractWindow {
     @Inject
@@ -40,6 +35,9 @@ public class Importdecklist extends AbstractWindow {
     private Button start;
 
     @Inject
+    private LookupField deck;
+
+    @Inject
     private ComponentsFactory componentsFactory;
 
     String decklistText = new String();
@@ -65,9 +63,19 @@ public class Importdecklist extends AbstractWindow {
         return false;
     }
 
-    public HashMap<String,Integer> parseLinesToCardsAndAmount (ArrayList<String> lines) {
+    public List<Card> returnCardWithSameName (Collection<Card> cards,String nameOfCard) {
+        ArrayList<Card> result = new ArrayList<>();
+
+        for (Card card:cards) {
+            if (card.getName().toUpperCase().equals(nameOfCard.toUpperCase())) {
+                result.add(card);
+            }
+        }
+        return result;
+    }
+
+    public HashMap<String,Integer> parseLinesToCardAndAmount(String line) {
         HashMap<String,Integer> cardsAndAmount = new HashMap<>();
-        for (String line : lines) {
             int iterator = 0;
             if(!line.equals("--Mainboard") && !line.equals("--Sideboard"))  {
                 try {
@@ -101,7 +109,7 @@ public class Importdecklist extends AbstractWindow {
                     System.out.println("Неправильный формат деклиста!");
                 }
             }
-        }
+
         return cardsAndAmount;
     }
 
@@ -115,7 +123,7 @@ public class Importdecklist extends AbstractWindow {
     @Override
     public void init(Map<String, Object> params) {
         start.setEnabled(false);
-
+        ArrayList<Card> cardsToCommit = new ArrayList<>();
         guide.setValue("" +
                 "Пожалуйста , используйте следуйщий формат для импорта деклиста\n" +
                 "--Mainboard\n" +
@@ -144,8 +152,13 @@ public class Importdecklist extends AbstractWindow {
            boolean missingCards = false;
 
             ArrayList<String> lines =  parseDeckToLines(decklistText);
-            HashMap<String,Integer> linesOfCardsAndAmount = parseLinesToCardsAndAmount(lines);
-            ArrayList<Card> cardsToCommit = new ArrayList<>();
+            HashMap<String,Integer> linesOfCardsAndAmount = new HashMap<>();
+            for (String line : lines) {
+                HashMap<String,Integer> lineAndAmount = parseLinesToCardAndAmount(line);
+                linesOfCardsAndAmount.putAll(lineAndAmount);
+            }
+
+
             HashMap<String,Integer> cardsMissing = new HashMap<>();
             HashMap<String,Integer> cardsToKeep = new HashMap<>();
             for (Map.Entry cardAndAmount : linesOfCardsAndAmount.entrySet()) {
@@ -160,6 +173,7 @@ public class Importdecklist extends AbstractWindow {
                         if(cardsToKeep.get(cardAndAmount.getKey()) != cardAndAmount.getValue()) {
                             Integer amount = cardsToKeep.get(cardAndAmount.getKey()) + 1;
                             cardsToKeep.put(String.valueOf(cardAndAmount.getKey()),amount);
+                            cardsToCommit.add(card);
                         }
                     }
                 }
@@ -174,6 +188,9 @@ public class Importdecklist extends AbstractWindow {
                 }
             }
             if(!missingCards) {
+                for (Card cardToCommit:cardsToCommit) {
+                    cardToCommit.setDeck(deck.getValue());
+                }
                 start.setEnabled(true);
             }
             else {
@@ -185,6 +202,52 @@ public class Importdecklist extends AbstractWindow {
                         Label label = componentsFactory.createComponent(Label.class);
                         label.setValue(missingCard.getKey() + "=" + missingCard.getValue());
                         labels.add(label);
+                    }
+                }
+            }
+        }
+    });
+
+    start.setAction(new AbstractAction("parse") {
+        @Override
+        public void actionPerform(Component component) {
+            decklistText = ((String) decklist.getValue());
+            decklistText = decklistText + "\n";
+            ArrayList<String> lines =  parseDeckToLines(decklistText);
+            ArrayList<Card> allCards = cardsToCommit;
+            ArrayList<Card> mainboard = new ArrayList<>();
+            ArrayList<Card> sideboard = new ArrayList<>();
+            boolean main = false;
+            boolean side = false;
+            for (String line : lines) {
+                if(line.equals("--Mainboard")) {
+                    main = true;
+                    side = false;
+                }
+                else if(line.equals("--Sideboard")){
+                    main = false;
+                    side = true;
+                }
+
+                HashMap<String ,Integer> cardAndAmount = parseLinesToCardAndAmount(line);
+
+                Map.Entry entry = cardAndAmount.entrySet().iterator().next();
+                String nameOfCard = (String) entry.getKey();
+                Integer amount = (Integer) entry.getValue();
+                if(main && !side) {
+                    ArrayList<Card> sameCards = (ArrayList<Card>) returnCardWithSameName(allCards,nameOfCard);
+                    for (int i = 0; i < amount; i++) {
+                        mainboard.add(sameCards.get(i));
+                        allCards.remove(sameCards.get(i));
+                        sameCards.remove(sameCards.get(i));
+                    }
+                }
+                else if (!main && side) {
+                    ArrayList<Card> sameCards = (ArrayList<Card>) returnCardWithSameName(allCards,nameOfCard);
+                    for (int i = 0; i < amount; i++) {
+                        sideboard.add(sameCards.get(i));
+                        allCards.remove(sameCards.get(i));
+                        sameCards.remove(sameCards.get(i));
                     }
                 }
             }

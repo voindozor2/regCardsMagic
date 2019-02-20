@@ -16,6 +16,12 @@
                 <![CDATA[select e from regofcardsmagic$People e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="cardsDs"
+                              class="com.company.regofcardsmagic.entity.Card">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Card e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -30,6 +36,14 @@
                        property="owner"/>
             </column>
         </fieldGroup>
+        <table height="100px"
+               width="311px">
+            <columns>
+                <column id="a"/>
+                <column id="b"/>
+            </columns>
+            <rows/>
+        </table>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

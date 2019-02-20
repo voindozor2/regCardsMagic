@@ -9,5 +9,18 @@
         <class>com.company.regofcardsmagic.entity.Contribution</class>
         <class>com.company.regofcardsmagic.entity.Types</class>
         <class>com.company.regofcardsmagic.entity.Tournament</class>
+        <class>com.company.regofcardsmagic.entity.Team</class>
+        <class>com.company.regofcardsmagic.entity.PositionInTeam</class>
+        <class>com.company.regofcardsmagic.entity.Storage</class>
+        <class>com.company.regofcardsmagic.entity.CollectionOfCards</class>
+        <class>com.company.regofcardsmagic.entity.RentCards</class>
+        <class>com.company.regofcardsmagic.entity.CardForTrade</class>
+        <class>com.company.regofcardsmagic.entity.Operation</class>
+        <class>com.company.regofcardsmagic.entity.Barter</class>
+        <class>com.company.regofcardsmagic.entity.CardExchange</class>
+        <class>com.company.regofcardsmagic.entity.MoneyOperation</class>
+        <class>com.company.regofcardsmagic.entity.Compensation</class>
+        <class>com.company.regofcardsmagic.entity.Trade</class>
+        <class>com.company.regofcardsmagic.entity.Rent</class>
     </persistence-unit>
 </persistence>
