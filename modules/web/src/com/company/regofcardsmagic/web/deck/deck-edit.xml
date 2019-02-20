@@ -17,7 +17,15 @@
             </query>
         </collectionDatasource>
         <collectionDatasource id="cardsDs"
-                              class="com.company.regofcardsmagic.entity.Card">
+                              class="com.company.regofcardsmagic.entity.Card"
+                              view="card-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$Card e where e.deck is NULL]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="cardsToAddDs"
+                              class="com.company.regofcardsmagic.entity.Card"
+                              view="card-view">
             <query>
                 <![CDATA[select e from regofcardsmagic$Card e]]>
             </query>
@@ -36,14 +44,40 @@
                        property="owner"/>
             </column>
         </fieldGroup>
-        <table height="100px"
-               width="311px">
-            <columns>
-                <column id="a"/>
-                <column id="b"/>
-            </columns>
-            <rows/>
-        </table>
+        <hbox spacing="true">
+            <vbox spacing="true">
+                <table id="deck"
+                       height="200px"
+                       width="300px">
+                    <columns>
+                        <column id="name"/>
+                        <column id="information"/>
+                    </columns>
+                    <rows datasource="cardsToAddDs"/>
+                </table>
+            </vbox>
+            <vbox spacing="true">
+                <button id="add"
+                        caption="add"/>
+                <button id="remove"
+                        caption="remove"/>
+                <checkBox id="mainboardCheckBox"
+                          caption="mainboard"/>
+                <checkBox id="sideboardCheckBox"
+                          caption="sideboard"/>
+            </vbox>
+            <vbox spacing="true">
+                <table id="cards"
+                       height="200px"
+                       width="300px">
+                    <columns>
+                        <column id="name"/>
+                        <column id="information"/>
+                    </columns>
+                    <rows datasource="cardsDs"/>
+                </table>
+            </vbox>
+        </hbox>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

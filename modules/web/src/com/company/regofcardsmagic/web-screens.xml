@@ -28,8 +28,8 @@
             template="com/company/regofcardsmagic/web/trade/trade-browse.xml"/>
     <screen id="regofcardsmagic$Trade.edit"
             template="com/company/regofcardsmagic/web/trade/trade-edit.xml"/>
-    <screen id="regofcardsmagic$Deck.browse"
-            template="com/company/regofcardsmagic/web/deck/deck-browse.xml"/>
     <screen id="regofcardsmagic$Deck.edit"
             template="com/company/regofcardsmagic/web/deck/deck-edit.xml"/>
+    <screen id="regofcardsmagic$Deck.browse"
+            template="com/company/regofcardsmagic/web/deck/deck-browse.xml"/>
 </screen-config>

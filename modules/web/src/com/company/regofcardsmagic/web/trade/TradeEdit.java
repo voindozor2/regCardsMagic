@@ -11,4 +11,10 @@ import javax.inject.Named;
 import java.util.Map;
 
 public class TradeEdit extends AbstractEditor<Trade> {
+    
+
+    @Override
+    public void init(Map<String, Object> params) {
+
+    }
 }
