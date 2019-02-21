@@ -48,17 +48,35 @@ public class DeckEdit extends AbstractEditor<Deck> {
     @Inject
     private Datasource<Deck> deckDs;
 
+    @Inject
+    private Button save;
+
     @Override
     protected boolean preCommit() {
-        deckDs.getItem().setMaindeck(mainBoardCards);
-        deckDs.getItem().setSideboard(sideBoardCards);
+
         return super.preCommit();
     }
 
     @Override
     public void init(Map<String, Object> params) {
         //TODO сделать чтобы он комитил в сущность эти самые листы
+        if(deckDs.getItem()!=null){
+            if(deckDs.getItem().getMaindeck()!=null){
+                mainBoardCards = (ArrayList<Card>) deckDs.getItem().getMaindeck();
+            }
+            if(deckDs.getItem().getSideboard()!=null){
+                sideBoardCards = (ArrayList<Card>) deckDs.getItem().getSideboard();
+            }
+        }
 
+        save.setAction(new AbstractAction("save") {
+            @Override
+            public void actionPerform(Component component) {
+                deckDs.getItem().setMaindeck(mainBoardCards);
+                deckDs.getItem().setSideboard(sideBoardCards);
+                deckDs.commit();
+            }
+        });
         add.setEnabled(false);
         cards.setMultiSelect(false);
         cardsToAddDs.clear();
@@ -119,8 +137,8 @@ public class DeckEdit extends AbstractEditor<Deck> {
                         sideBoardCards.add(selectedCard);
                     }
                 }
-
             }
+
         });
 
 
