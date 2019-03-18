@@ -32,4 +32,20 @@
             template="com/company/regofcardsmagic/web/deck/deck-edit.xml"/>
     <screen id="regofcardsmagic$Deck.browse"
             template="com/company/regofcardsmagic/web/deck/deck-browse.xml"/>
+    <screen id="decklist-browse"
+            template="com/company/regofcardsmagic/web/usersUI/decklist/decklist-browse.xml"/>
+    <screen id="decklist-edit"
+            template="com/company/regofcardsmagic/web/usersUI/decklist/decklist-edit.xml"/>
+    <screen id="cardsPull-browse"
+            template="com/company/regofcardsmagic/web/usersUI/cardsPull/cardsPull-browse.xml"/>
+    <screen id="registration"
+            template="com/company/regofcardsmagic/web/usersUI/registration/registration.xml"/>
+    <screen id="trades"
+            template="com/company/regofcardsmagic/web/usersUI/trades/trades.xml"/>
+    <screen id="people-browse"
+            template="com/company/regofcardsmagic/web/usersUI/people/people-browse.xml"/>
+    <screen id="articles-browse"
+            template="com/company/regofcardsmagic/web/usersUI/articles/articles-browse.xml"/>
+    <screen id="articles-edit"
+            template="com/company/regofcardsmagic/web/usersUI/articles/articles-edit.xml"/>
 </screen-config>

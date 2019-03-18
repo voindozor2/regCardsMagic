@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.regofcardsmagic.web.usersUI.decklist.DecklistEdit"
+        messagesPack="com.company.regofcardsmagic.web.usersUI.decklist">
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <vbox spacing="true">
+            <grid spacing="true"
+                  width="100%">
+                <columns count="4"/>
+                <rows>
+                    <row>
+                        <textField id="name"
+                                   width="100%"/>
+                        <popupButton id="formatOfDeck"
+                                     popupOpenDirection="BOTTOM_CENTER"
+                                     width="100%"/>
+                        <textField id="people"
+                                   width="100%"/>
+                        <checkBox id="test"
+                                  caption="Test."
+                                  height="100%"
+                                  width="100%"/>
+                    </row>
+                </rows>
+            </grid>
+            <grid spacing="true"
+                  width="100%">
+                <columns count="1"/>
+                <rows>
+                    <row>
+                        <textField id="inputCard"
+                                   width="100%"/>
+                    </row>
+                </rows>
+            </grid>
+            <grid height="100%"
+                  spacing="true"
+                  width="100%">
+                <columns count="3"/>
+                <rows>
+                    <row>
+                        <button id="addToMain"
+                                caption="addToMain"
+                                width="100%"/>
+                        <button id="addToSide"
+                                caption="addToSide"
+                                width="100%"/>
+                        <button id="addToMaybe"
+                                caption="addToMaybe"
+                                width="100%"/>
+                    </row>
+                    <row>
+                        <textArea id="main"
+                                  rows="35"
+                                  width="100%"/>
+                        <textArea id="side"
+                                  rows="35"
+                                  width="100%"/>
+                        <textArea id="maybe"
+                                  rows="35"
+                                  width="100%"/>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
+    </layout>
+</window>

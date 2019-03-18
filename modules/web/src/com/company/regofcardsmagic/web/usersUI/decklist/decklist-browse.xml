@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.regofcardsmagic.web.usersUI.decklist.DecklistBrowse"
+        messagesPack="com.company.regofcardsmagic.web.usersUI.decklist">
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <grid height="100%"
+              spacing="true"
+              width="100%">
+            <columns>
+                <column flex="3.0"/>
+                <column flex="1.0"/>
+            </columns>
+            <rows>
+                <row>
+                    <hbox spacing="true"
+                          width="100%">
+                        <vbox spacing="true">
+                            <vbox id="main"
+                                  spacing="true"/>
+                        </vbox>
+                        <vbox spacing="true">
+                            <vbox id="side"
+                                  spacing="true"/>
+                            <vbox id="maybe"
+                                  spacing="true"/>
+                        </vbox>
+                    </hbox>
+                    <vbox spacing="true">
+                        <button id="print"
+                                caption="print"
+                                width="100%"/>
+                        <button id="purchase requisition"
+                                caption="заявка на закупку"
+                                width="100%"/>
+                        <image height="250px"
+                               width="100%"/>
+                    </vbox>
+                </row>
+            </rows>
+        </grid>
+    </layout>
+</window>

@@ -11,5 +11,13 @@
         <item screen="importDeckList"/>
         <item screen="regofcardsmagic$Trade.browse"/>
         <item screen="regofcardsmagic$Deck.browse"/>
+        <item screen="decklist-browse"/>
+        <item screen="decklist-edit"/>
+        <item screen="cardsPull-browse"/>
+        <item screen="registration"/>
+        <item screen="trades"/>
+        <item screen="people-browse"/>
+        <item screen="articles-browse"/>
+        <item screen="articles-edit"/>
     </menu>
 </menu-config>
