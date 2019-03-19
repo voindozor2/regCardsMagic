@@ -6,8 +6,10 @@
     <dialogMode height="600"
                 width="800"/>
     <layout>
-        <vbox spacing="true">
-            <grid spacing="true"
+        <vbox height="100%"
+              spacing="true">
+            <grid height="100%"
+                  spacing="true"
                   width="100%">
                 <columns count="8"/>
                 <rows>

@@ -1,9 +1,12 @@
 package com.company.regofcardsmagic.web.usersUI.cardsPull;
 
 import com.company.regofcardsmagic.service.ApiScryFallService;
+import com.company.regofcardsmagic.service.ScryFallService;
 import com.haulmont.cuba.gui.components.*;
+import forohfor.scryfall.api.Card;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class CardspullBrowse extends AbstractWindow {
@@ -14,14 +17,14 @@ public class CardspullBrowse extends AbstractWindow {
     private Button find;
 
     @Inject
-    private ApiScryFallService apiScryFallService;
+    private ScryFallService scryFallService;
 
     @Override
     public void init(Map<String, Object> params) {
         find.setAction(new AbstractAction("find") {
             @Override
             public void actionPerform(Component component) {
-
+               scryFallService.importAllCardsFromScryFall();
             }
         });
     }
