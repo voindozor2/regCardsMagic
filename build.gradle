@@ -68,6 +68,10 @@ configure([globalModule, coreModule, webModule]) {
 }
 
 configure(globalModule) {
+
+    dependencies {
+        compile(files("${rootProject.projectDir}/lib/ScryfallAPIBinding.jar"))
+    }
     task enhance(type: CubaEnhancing)
 
     
@@ -89,6 +93,7 @@ configure(coreModule) {
         compile(group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.0.1')
         compile(group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.1')
         compile(group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.0.1')
+        compile(files("${rootProject.projectDir}/lib/ScryfallAPIBinding.jar"))
     }
 
     task cleanConf(description: 'Cleans up conf directory') {
