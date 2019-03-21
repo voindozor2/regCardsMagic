@@ -75,22 +75,32 @@ public class ScryFallServiceBean implements ScryFallService {
                 attributes.add((String) toUpdateArray.getKey());
                 values.add((String) toUpdateArray.getValue());
             }
-            String attibutesString = attributes.toString().substring(1,attributes.toString().length()-1);
-            String valuesString = values.toString().substring(1,values.toString().length()-1);
-            String[] asd = valuesString.split(",");
-            valuesString = "";
-            for (int i = 0; i < asd.length; i++) {
-                if(i == 0) {
-                    valuesString+=("'"+asd[i]+"'");
-                }
-                else {
-                    valuesString+=(",'"+asd[i]+"'");
-                }
-            }
-            String sql = "INSERT INTO "+ nameOfTable + "("+attibutesString+")"+" VALUES("+valuesString+")";
-            Statement stmt = connection.createStatement();
-            stmt.execute(sql);
+            for (int i = 0; i < attributes.size(); i++) {
+                String atttributesString = new String("");
+                String valuesString = new String("");
 
+                for (int j = 0; j < attributes.size(); j++) {
+                    if(j==0) {
+                        atttributesString+=attributes.get(j);
+                    }
+                    else {
+                        atttributesString+=","+attributes.get(j);
+                    }
+                }
+
+                for (int a = 0; a < values.size(); a++) {
+                    if(a==0) {
+                        valuesString+="\"" +values.get(a)+"\"";
+                    }
+                    else {
+                        valuesString+=","+"\"" +values.get(a)+"\"";
+                    }
+                }
+
+                String sql = "INSERT INTO "+ nameOfTable + "("+atttributesString+")"+" VALUES("+""+valuesString+""+")";
+                Statement stmt = connection.createStatement();
+                stmt.execute(sql);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }
