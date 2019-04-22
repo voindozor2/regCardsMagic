@@ -22,5 +22,6 @@
         <class>com.company.regofcardsmagic.entity.Compensation</class>
         <class>com.company.regofcardsmagic.entity.Trade</class>
         <class>com.company.regofcardsmagic.entity.Rent</class>
+        <class>com.company.regofcardsmagic.entity.CardScryFall</class>
     </persistence-unit>
 </persistence>
