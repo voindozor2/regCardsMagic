@@ -36,8 +36,6 @@
             template="com/company/regofcardsmagic/web/usersUI/decklist/decklist-browse.xml"/>
     <screen id="decklist-edit"
             template="com/company/regofcardsmagic/web/usersUI/decklist/decklist-edit.xml"/>
-    <screen id="cardsPull-browse"
-            template="com/company/regofcardsmagic/web/usersUI/cardsPull/cardsPull-browse.xml"/>
     <screen id="registration"
             template="com/company/regofcardsmagic/web/usersUI/registration/registration.xml"/>
     <screen id="trades"
@@ -48,4 +46,8 @@
             template="com/company/regofcardsmagic/web/usersUI/articles/articles-browse.xml"/>
     <screen id="articles-edit"
             template="com/company/regofcardsmagic/web/usersUI/articles/articles-edit.xml"/>
+    <screen id="cardPullSearch"
+            template="com/company/regofcardsmagic/web/usersUI/cardsPull/cardPullSearch.xml"/>
+    <screen id="regofcardsmagic$Storage.browse"
+            template="com/company/regofcardsmagic/web/usersUI/cardsPull/storage-browse.xml"/>
 </screen-config>

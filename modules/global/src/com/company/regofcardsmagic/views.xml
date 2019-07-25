@@ -4,7 +4,9 @@
           extends="_local"
           name="card-view">
         <property name="owner"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="name"/>
+        </property>
         <property name="deck"
                   view="_minimal"/>
     </view>
@@ -67,5 +69,17 @@
         </property>
         <property name="card"
                   view="_minimal"/>
+    </view>
+    <view class="com.company.regofcardsmagic.entity.CollectionOfCards"
+          extends="_local"
+          name="collectionOfCards-view">
+        <property name="card"
+                  view="_minimal">
+            <property name="information"/>
+            <property name="owner"
+                      view="_minimal"/>
+            <property name="deck"
+                      view="_minimal"/>
+        </property>
     </view>
 </views>

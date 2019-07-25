@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.regofcardsmagic.web.usersUI.cardsPull.StorageBrowse"
+        focusComponent="storagesTable"
+        lookupComponent="storagesTable"
+        messagesPack="com.company.regofcardsmagic.web.usersUI.cardsPull">
+    <dsContext>
+        <groupDatasource id="collectionOfCardsesDs"
+                         class="com.company.regofcardsmagic.entity.CollectionOfCards"
+                         view="collectionOfCards-view">
+            <query>
+                <![CDATA[select e from regofcardsmagic$CollectionOfCards e]]>
+            </query>
+        </groupDatasource>
+        <groupDatasource id="cardScryFallsDs"
+                         class="com.company.regofcardsmagic.entity.CardScryFall"
+                         view="_local">
+            <query>
+                <![CDATA[select e from regofcardsmagic$CardScryFall e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="storagesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="storagesTable"
+                datasource="collectionOfCardsesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="storagesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns/>
+            <rows datasource="collectionOfCardsesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="storagesTable.create"/>
+                <button id="editBtn"
+                        action="storagesTable.edit"/>
+                <button id="removeBtn"
+                        action="storagesTable.remove"/>
+                <button id="search"
+                        caption="Search"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

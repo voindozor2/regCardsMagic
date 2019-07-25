@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://caption"
-        class="com.company.regofcardsmagic.web.usersUI.cardsPull.CardspullBrowse"
+        class="com.company.regofcardsmagic.web.usersUI.cardsPull.Cardpullsearch"
         messagesPack="com.company.regofcardsmagic.web.usersUI.cardsPull">
-    <dialogMode height="600"
+     <dialogMode height="600"
                 width="800"/>
     <layout>
         <vbox height="100%"
