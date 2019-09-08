@@ -1,16 +1,14 @@
 
 buildscript {
-    ext.cubaVersion = '6.9.7'
+    ext.cubaVersion = '7.1.0'
     repositories {
-        mavenCentral()
         maven {
-            url 'https://repo.cuba-platform.com/content/groups/work'
-            credentials {
-                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : 'cuba')
-                password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
-            }
+            url 'https://dl.bintray.com/cuba-platform/main'
+            
         }
+        jcenter()
 
+        
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -25,8 +23,6 @@ def webModule = project(":${modulePrefix}-web")
 
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
-
-apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
 cuba {
@@ -42,15 +38,13 @@ cuba {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-
 }
 
-def postgres = 'org.postgresql:postgresql:9.4.1212'
+def hsql = 'org.hsqldb:hsqldb:2.4.1'
 
 configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
-    apply(plugin: 'idea')
     apply(plugin: 'cuba')
 
     dependencies {
@@ -68,13 +62,18 @@ configure([globalModule, coreModule, webModule]) {
 }
 
 configure(globalModule) {
-
     dependencies {
-        compile(files("${rootProject.projectDir}/lib/ScryfallAPIBinding.jar"))
+        if (!JavaVersion.current().isJava8()) {
+            runtime('javax.xml.bind:jaxb-api:2.3.1')
+            runtime('org.glassfish.jaxb:jaxb-runtime:2.3.1')
+        }
     }
-    task enhance(type: CubaEnhancing)
 
-    
+    entitiesEnhancing {
+        main {
+            enabled = true
+        }
+    }
 }
 
 configure(coreModule) {
@@ -86,14 +85,9 @@ configure(coreModule) {
 
     dependencies {
         compile(globalModule)
-        provided(servletApi)
-        jdbc(postgres)
-        testRuntime(postgres)
-        compile(group: 'org.apache.poi', name: 'poi', version: '4.0.1')
-        compile(group: 'org.apache.poi', name: 'poi-scratchpad', version: '4.0.1')
-        compile(group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.1')
-        compile(group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.0.1')
-        compile(files("${rootProject.projectDir}/lib/ScryfallAPIBinding.jar"))
+        compileOnly(servletApi)
+        jdbc(hsql)
+        testRuntime(hsql)
     }
 
     task cleanConf(description: 'Cleans up conf directory') {
@@ -113,33 +107,32 @@ configure(coreModule) {
     }
 
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
-        dbms = 'postgres'
-        host = 'localhost'
-        dbName = 'regofcardsmagic'
-        dbUser = 'postgres'
-        dbPassword = 'postgres'
+        dbms = 'hsql'
+        host = 'localhost:9010'
+        dbName = 'regofcardsmagic-Wsx5GBUGD'
+        dbUser = 'sa'
+        dbPassword = ''
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
-        dbms = 'postgres'
-        host = 'localhost'
-        dbName = 'regofcardsmagic'
-        dbUser = 'postgres'
-        dbPassword = 'postgres'
+        dbms = 'hsql'
+        host = 'localhost:9010'
+        dbName = 'regofcardsmagic-Wsx5GBUGD'
+        dbUser = 'sa'
+        dbPassword = ''
     }
 }
-    
+
 configure(webModule) {
     configurations {
         webcontent
     }
 
     dependencies {
-        provided(servletApi)
+        compileOnly(servletApi)
         compile(globalModule)
-
     }
-    
+
     task webArchive(type: Zip) {
         from file("$buildDir/web")
         from file('web')
@@ -178,10 +171,6 @@ configure(webModule) {
     }
 }
 
-
-
-
-
 task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf") {
     delete("$cuba.tomcat.dir/shared")
     delete("$cuba.tomcat.dir/webapps/${modulePrefix}-core")
@@ -199,22 +188,3 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3.1'
-}
-
-task jelasticBuildWar(type: CubaWarBuilding) {
-    appHome = '..'
-    webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
-    appProperties = ['cuba.automaticDatabaseUpdate' : true,
-'cuba.logDir' : '${catalina.base}/logs']
-    includeJdbcDriver = true
-    includeContextXml = true
-}
-
-task jelasticDeployWar(type: CubaJelasticDeploy, dependsOn: jelasticBuildWar) {
-    email = rootProject.hasProperty('jelasticEmail') ? rootProject['jelasticEmail'] : ''
-    password = rootProject.hasProperty('jelasticPassword') ? rootProject['jelasticPassword'] : ''
-    hostUrl = 'app.jelastic.regruhosting.ru'
-    environment = 'my-env-1'
-}
